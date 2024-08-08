@@ -16,6 +16,18 @@ export default defineConfig({
   // 继承博客主题(@sugarat/theme)
   extends: blogTheme,
   base,
+  ignoreDeadLinks: [
+    // 忽略精确网址 "/playground"
+    '/playground',
+    // 忽略所有 localhost 链接
+    /^https?:\/\/localhost/,
+    // 忽略所有包含 "/repl/" 的链接
+    /\/repl\//,
+    // 自定义函数，忽略所有包含 "ignore "的链接
+    (url) => {
+      return url.toLowerCase().includes('ignore')
+    }
+  ],
   lang: 'zh-cn',
   title: 'InkInk',
   description: '欢迎来到我的博客',
