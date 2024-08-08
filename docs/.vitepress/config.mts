@@ -9,13 +9,13 @@ import { blogTheme } from './blog-theme'
 // const base = process.env.GITHUB_ACTIONS === 'true'
 //   ? '/vitepress-blog-sugar-template/'
 //   : '/'
-const base = '/blog/'
+//const base = '/blog/'
 // Vitepress 默认配置
 // 详见文档：https://vitepress.dev/reference/site-config
 export default defineConfig({
   // 继承博客主题(@sugarat/theme)
   extends: blogTheme,
-  
+  //base,
   ignoreDeadLinks: [
     // 忽略精确网址 "/playground"
     '/playground',
@@ -35,7 +35,7 @@ export default defineConfig({
   // 详见：https://vitepress.dev/zh/reference/site-config#head
   head: [
     // 配置网站的图标（显示在浏览器的 tab 上）
-    ['link', { rel: 'icon', href: base+'/favicon.ico' }]
+    ['link', { rel: 'icon', href: '/favicon.ico' }]
   ],
   themeConfig: {
     // 展示 2,3 级标题在目录中
