@@ -15,7 +15,7 @@ const base = '/blog/'
 export default defineConfig({
   // 继承博客主题(@sugarat/theme)
   extends: blogTheme,
-  base,
+  
   ignoreDeadLinks: [
     // 忽略精确网址 "/playground"
     '/playground',
