@@ -52,7 +52,8 @@ export default defineConfig({
     nav: [
       { text: '首页', link: '/' },
       { text: '技术笔记', link: '/blog/technology/网关GateWay' },
-      { text: '读书笔记', link: '/blog/notes/小米创业思考' }
+      { text: '读书笔记', link: '/blog/notes/小米创业思考' },
+      { text: '八股文', link: '/blog/interview/基础概念与常识' }
     ],
     socialLinks: [
       {
