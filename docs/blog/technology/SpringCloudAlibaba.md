@@ -34,7 +34,7 @@ CAP理论
 
 大致拆分简图：
 
-![image](https://note.youdao.com/yws/public/resource/807ec1d547c7438d34f1dff7307ff61b/xmlnote/WEBRESOURCE88394a586c39a17d851402a939059638/9930)
+![image](http://www.qiniuyun.zhangzhendong.com/blog/image/9930.png)
 
 拆分出多个模块以后，就会出现各种各样的问题，而SpringCloud提供了一整套的解决方案！
 
@@ -72,7 +72,7 @@ Nacos分为：Nacos控制台-服务注册中心(Service Registry)，服务提供
 
 Nacos启动方式：https://nacos.io/zh-cn/docs/quick-start.html
 
-![nacos_arch.jpg](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561217892717-1418fb9b-7faa-4324-87b9-f1740329f564.jpeg)
+![nacos_arch.jpg](http://www.qiniuyun.zhangzhendong.com/blog/image/1561217892717-1418fb9b-7faa-4324-87b9-f1740329f564.jpeg)
 
 Nacos注册中心分为server与client，server采用Java编写，为client提供注册发现服务与配置服务。而client可以用多语言实现，client与微服务嵌套在一起，nacos提供sdk和openApi，如果没有sdk也可以根据openApi手动写服务注册与发现和配置拉取的逻辑
 
@@ -80,11 +80,15 @@ Nacos注册中心分为server与client，server采用Java编写，为client提�
 
 - - 失效剔除：默认每隔一段时间（默认为5秒）如果客户端实例超过15秒还没有发送心跳过来，则将实例健康状态改成false；如果客户端实例超过30秒还没有发送心跳过来，则剔除该实例。
   - 自我保护：Nacos Server 在运行期间，会统计心跳失败的比例在15分钟之内是否低于85%(通常由于网络不稳定导致)。 Nacos Server会将当前的实例注册信息保护起来， 让这些实例不会过期，尽可能保护这些注册信息。
+
 - 服务提供者
+
 - - 服务注册：Nacos-client启动时，会去注册中心进行服务注册，其实是通过HTTP请求调用Nacos-server，当nacos-server端接收到客户端的注册请求时，会将客户端的实例数据（包括ip、端口、微服务名等）保存到server端的注册表中
   - 服务续约：在注册完服务之后，服务提供者会维护一个心跳（默认周期为5秒）用来持续告诉Nacos Server: "我还活着 ” 、
   - 服务下线：当服务实例进行正常的关闭操作时，它会触发一个服务下线的DELETE 请求给Nacos Server, 告诉服务注册中心：“我要下线了 ”。
+
 - 服务消费者
+
 - - 获取服务：当我们启动服务消费者的时候，它会发送一个REST请求给服务注册中心，来获取上面注册的服务清单
   - 服务调用：服务消费者在获取服务清单后，得到具体提供服务的实例名和该实例的元数据信息。通过本地负载均衡（loadbalence）获取相应的地址进行访问。
 
@@ -135,7 +139,7 @@ https://nacos.io/zh-cn/docs/quick-start-spring-cloud.html
 对于客户端来说：需要考虑的是通过接口从服务器查询得到相应的数据然后返回。
 关系如下：
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20210124145310805.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1pvbmdfMDkxNQ==,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](http://www.qiniuyun.zhangzhendong.com/blog/image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1pvbmdfMDkxNQ==,size_16,color_FFFFFF,t_70.png)
 
 注意：
 
@@ -157,7 +161,7 @@ Nacos采用的是Pull模式（Kafka也是如此），并且采用了一种长轮
 
 如下图：
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20210124150330381.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1pvbmdfMDkxNQ==,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](http://www.qiniuyun.zhangzhendong.com/blog/image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1pvbmdfMDkxNQ==,size_16,color_FFFFFF,t_70-20240813195454580.png)
 
 详细地来说：
 
@@ -165,7 +169,7 @@ Nacos采用的是Pull模式（Kafka也是如此），并且采用了一种长轮
 一旦配置发生了变化，服务端会把原来“Hold”住的请求进行返回。
 工作流程图如下：
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20210124152439965.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1pvbmdfMDkxNQ==,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](http://www.qiniuyun.zhangzhendong.com/blog/image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1pvbmdfMDkxNQ==,size_16,color_FFFFFF,t_70-20240813195457680.png)
 
 
 对于流程图解释如下：

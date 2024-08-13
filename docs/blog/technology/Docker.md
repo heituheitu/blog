@@ -60,7 +60,7 @@ Docker将集装箱思想运用到软件打包上，为代码提供一个基于�
 
 容器是国内约定俗称的叫法，外国人思维可能Container只用到了集装箱的思想。
 
-![image-2023061217254550](https://note.youdao.com/yws/public/resource/6755b73c733077a9dbf3967630e0e2b3/xmlnote/WEBRESOURCEecc63d674a4c232b8c5c58e267033dfe/10936)
+![](http://www.qiniuyun.zhangzhendong.com/blog/image/10936.png)
 
 ### HOW
 
@@ -74,7 +74,7 @@ Docker将集装箱思想运用到软件打包上，为代码提供一个基于�
 4. Registry
 5. Docker容器：Container
 
-![WX20230613-145650@2x](https://note.youdao.com/yws/public/resource/6755b73c733077a9dbf3967630e0e2b3/xmlnote/WEBRESOURCE3426dddc742b417b4f83858fa4429770/10940)
+![WX20230613-145650@2x](http://www.qiniuyun.zhangzhendong.com/blog/image/10940.png)
 
 Docker采用Client/Server架构。客户端向服务器发送请求，服务器负责构建、运行和分发容器。C/S可以在同一台机器，C也可以通过stocket或Rest Api远程通信。
 
@@ -129,7 +129,7 @@ Docker daemon是服务器组件，以后台服务的方式运行。默认只响�
 
 Linux操作系统由内核空间和用户空间组成。
 
-![WX20230614-193906](https://note.youdao.com/yws/public/resource/6755b73c733077a9dbf3967630e0e2b3/xmlnote/WEBRESOURCE2a5a150218dc4ec4ea8ff2d6e0e57a3c/10941)
+![WX20230614-193906](http://www.qiniuyun.zhangzhendong.com/blog/image/10941.png)
 
 内核空间是kernel，Linux刚启动时会加载bootfs文件系统，之后bootfs系统会被卸载掉。
 
@@ -145,7 +145,7 @@ Linux操作系统由内核空间和用户空间组成。
 
 Docker支持通过扩展现有镜像，创建新的镜像。
 
-![WX20230625-193700](https://note.youdao.com/yws/public/resource/6755b73c733077a9dbf3967630e0e2b3/xmlnote/WEBRESOURCE6356eb2c4ce58f7e378cd9970d76610f/10942)
+![WX20230625-193700](http://www.qiniuyun.zhangzhendong.com/blog/image/10942.png)
 
 优势：共享资源
 
@@ -219,11 +219,11 @@ Dockerfile中的ADD、COPY等命令可以将build context中的文件添加到�
 
 新的镜像是通过base镜像的顶部添加一个新的镜像层得到的。
 
-![WX20230704-180934@2x](https://note.youdao.com/yws/public/resource/6755b73c733077a9dbf3967630e0e2b3/xmlnote/WEBRESOURCE102d25a6c1b389fccb1415fca9fe84b9/10943)
+![WX20230704-180934@2x](http://www.qiniuyun.zhangzhendong.com/blog/image/10943.png)
 
 docker history会显示镜像的构建历史，也就是Dokcerfile的执行过程。
 
-![WX20230704-181103@2x](https://note.youdao.com/yws/public/resource/6755b73c733077a9dbf3967630e0e2b3/xmlnote/WEBRESOURCEc2a670aae9e74201179d7a88a630d566/10944)
+![WX20230704-181103@2x](http://www.qiniuyun.zhangzhendong.com/blog/image/10944.png)
 
 此时多了97.07MB的一个镜像层。
 
@@ -356,4 +356,3 @@ docker run --it --rm --cpuset-cpus="1" u-stress:latest /bin/bash
 #u-stress:latest：这是你要运行的Docker容器的名称。u-stress可能是用户名，latest是镜像的版本。
 #/bin/bash：这是在容器启动后要执行的命令。在这种情况下，它启动一个bash shell，使你可以在容器内交互式地运行命令。
 ```
-

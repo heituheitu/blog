@@ -1,37 +1,29 @@
 # HTTP协议
 
+![](https://pic1.zhimg.com/v2-292eb0ba56a62cf2b198b0251b78b8cc.jpg?source=57bbeac9)
+
 ## HTTP
 
 ### 父级
 
- TCP/IP 协议簇。HTTP 属于它内部的一个子集
+ TCP/IP 协议簇。HTTP 属于它内部的一个子集（http/3之前）
 
 ### TCP/IP
 
 #### TCP/IP 协议簇分层
 
-1. 应用层
-
-   应用层决定了向用户提供应用服务时通信的活动。TCP/IP 协议簇内预存了各类通用的应用服务。比如，FTP（File
-   Transfer Protocol，文件传输协议）和 DNS（Domain Name System，域名系统）服务就是其中两类。HTTP 协议也处于该层。
-
-2. 传输层
-
-   传输层对上层应用层，提供处于网络连接中的两台计算机之间的数据传输。在传输层有两个性质不同的协议：TCP（Transmission Control Protocol，传输控制协议）和 UDP（User Data Protocol，用户数据报协议）
-
-3. 网络层
-
-   网络层用来处理在网络上流动的数据包。
-
-4. 链路层
-
-   用来处理连接网络的硬件部分。包括控制操作系统、硬件的设备驱动、NIC（Network Interface Card，网络适配器，即网卡），及光纤等物理可见部分。
+| 层级                                                         | 描述                                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 应用层&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 应用层决定了向用户提供应用服务时通信的活动。TCP/IP 协议簇内预存了各类通用的应用服务。比如，FTP（File Transfer Protocol，文件传输协议）和 DNS（Domain Name System，域名系统）服务就是其中两类。HTTP 协议也处于该层。 |
+| 传输层                                                       | 传输层对上层应用层，提供处于网络连接中的两台计算机之间的数据传输。在传输层有两个性质不同的协议：TCP（Transmission Control Protocol，传输控制协议）和 UDP（User Data Protocol，用户数据报协议）。 |
+| 网络层                                                       | 网络层用来处理在网络上流动的数据包。                         |
+| 链路层                                                       | 用来处理连接网络的硬件部分。包括控制操作系统、硬件的设备驱动、NIC（Network Interface Card，网络适配器，即网卡），及光纤等物理可见部分。 |
 
 利用 TCP/IP 协议簇进行网络通信时，会通过分层顺序与对方进行通 信。发送端从应用层往下走，接收端则从链路层往上走。
 
 发送端在层与层之间传输数据时，每经过一层时必定会被打上一个该 层所属的首部信息。反之，接收端在层与层传输数据时，每经过一层 时会把对应的首部消去。 这种把数据信息包装起来的做法称为封装（encapsulate）
 
-####  TCP和http的区别
+####  TCP和HTTP的区别
 
 TCP连接和HTTP请求是两个不同的概念。
 TCP连接是网络通信中的一个基本概念，它是在两个设备之间建立的一个通信通道。TCP连接的建立、数据传输和关闭都是通过TCP协议来完成的。
@@ -44,7 +36,7 @@ TCP连接是在网络层面上进行的，而HTTP请求是在应用层面上进�
 
 与 HTTP 关系密切的协议 : IP、TCP 和DNS
 
-1. IP 协议的作用是把各种数据包传送给对方。而要保证确实传送到对方那里，则需要满足各类条件。其中两个重要的条件是 IP 地址和 MAC地址。
+1. 如果要保证各种数据包准确传送到对方那里，需要满足各类条件。其中两个重要的条件是 IP 地址和 MAC地址。
 
    - IP 地址指明了节点被分配到的地址，MAC 地址是指网卡所属的固定地址。IP 地址可以和 MAC 地址进行配对。IP 地址可变换，但 MAC地址基本上不会更改
    - IP 间的通信依赖 MAC 地址。在网络上，通信的双方在同一局域网（LAN）内的情况是很少的，通常是经过多台计算机和网络设备中转才能连接到对方。而在进行中转时，会利用下一站中转设备的 MAC地址来搜索下一个中转目标。这时，会采用 ARP 协议（AddressResolution Protocol）。ARP 是一种用以解析地址的协议，根据通信方的 IP 地址就可以反查出对应的 MAC 地址。
@@ -55,13 +47,25 @@ TCP连接是在网络层面上进行的，而HTTP请求是在应用层面上进�
 
    - 为了准确无误地将数据送达目标处，TCP 协议采用了三次握手（three-way handshaking）策略。
 
-   - 握手过程中使用了 TCP 的标志（flag） —— SYN（synchronize） 和ACK（acknowledgement）。
+     #### 三次握手
+
+     ```python
+     Client            Server
+       |                  |
+       |---- SYN ---->    | (1. Client sends SYN)
+       |                  |
+       |<---- SYN-ACK ----| (2. Server sends SYN-ACK)
+       |                  |
+       |---- ACK ---->    | (3. Client sends ACK)
+       |                  |
+     握手过程中使用了 TCP 的标志（flag） —— SYN（synchronize） 和ACK（acknowledgement）。
      1.发送端首先发送一个带 SYN 标志的数据包给对方。包含一个（ISN）初始序列号，用于保证数据顺序。
      2.接收端收到后，回传一个带有 SYN/ACK 标志的数据包以示接收到SYN段，并准备好接收数据。
      3.最后，发送端再回传一个带 ACK 标志的数据包，代表“握手”结束。
      若在握手过程中某个阶段莫名中断，TCP 协议会再次以相同的顺序发送相同的数据包。
+     ```
 
-   - 为什么需要三次握手呢？
+   - Why
 
      为了防止已失效的连接请求报文段突然又传送到了服务端，因而产生错误。
 
@@ -69,27 +73,36 @@ TCP连接是在网络层面上进行的，而HTTP请求是在应用层面上进�
 
      假设不采用“三次握手”，那么只要server发出确认，新的连接就建立了，由于client并没有发出建立连接的请求，因此不会理睬server的确认，也不会向server发送数据，但server却以为新的运输连接已经建立，并一直等待client发来数据。所以没有采用“三次握手”，这种情况下server的很多资源就白白浪费掉了。
 
-   - 四次挥手
+     #### 四次挥手
 
-     为什么需要四次挥手呢？
+     ```python
+     Client            Server
+       |                  |
+       |---- FIN ---->    | (1. Client sends FIN)
+       |                  |
+       |<---- ACK ----    | (2. Server sends ACK)
+       |                  |
+       |                  |
+       |<---- FIN ----    | (3. Server sends FIN)
+       |                  |
+       |---- ACK ---->    | (4. Client sends ACK)
+       |                  |
+     第一步：客户端发送一个FIN报文给服务器，表示客户端不再发送数据，进入FIN-WAIT-1状态。
+     第二步：服务器接收到FIN报文后，发送一个ACK报文确认收到，进入CLOSE-WAIT状态。客户端接收到ACK报文后进入FIN-WAIT-2状态。
+     第三步：服务器发送一个FIN报文给客户端，表示服务器不再发送数据，进入LAST-ACK状态。
+     第四步：客户端接收到FIN报文后，发送一个ACK报文确认收到，进入TIME-WAIT状态。服务器接收到ACK报文后进入CLOSED状态，连接完全关闭
+     ```
 
-     TCP是全双工模式，当client发出FIN报文段时，只是表示client已经没有数据要发送了，client告诉server，它的数据已经全部发送完毕了；
+     Why
 
-     但是，这个时候client还是可以接受来server的数据；当server返回ACK报文段时，表示它已经知道client没有数据发送了，但是server还是可以发送数据到client的；
-
-     当server也发送了FIN报文段时，这个时候就表示server也没有数据要发送了，就会告诉client，我也没有数据要发送了，如果收到client确认报文段，之后彼此就会愉快的中断这次TCP连接。
+     TCP是全双工模式，四次挥手确保了双方都明确对方已经关闭了连接，避免了数据丢失和未完成的传输。这种机制提供了可靠的连接终止方法，是TCP协议中保障数据传输完整性的关键步骤之一。
 
 3. DNS（Domain Name System）服务是和 HTTP 协议一样位于应用层的协议。它提供域名到 IP 地址之间的解析服务。
 
    - 人容易理解域名，计算机容易理解数字ip
    - DNS 服务应运而生。DNS 协议提供通过域名查找 IP 地址，或逆向从 IP 地址反查域名的服务
 
-URI 和 URL：URI（统一资源标识符）,URL（Uniform Resource Locator，统一资源定位符）
-
-### HTTP 协议用于客户端和服务器端之间的通信
-
-1. 请求报文是由请求方法、请求 URI、协议版本、可选的请求首部字段和内容实体构成的
-2. 响应报文基本上由协议版本、状态码（表示请求成功或失败的数字代码）、用以解释状态码的原因短语、可选的响应首部字段以及实体主体构成。
+URI 和 URL：URI（统一资源标识符）,URL（Uniform Resource Locator，统一资源定位符），URL是URI的一个子集
 
 ### HTTP 是一种不保存状态，即无状态（stateless）协议。
 
@@ -97,11 +110,6 @@ URI 和 URL：URI（统一资源标识符）,URL（Uniform Resource Locator，�
    HTTP/1.1 虽然是无状态协议，但为了实现期望的保持状态功能，于是引入了 Cookie 技术。有了 Cookie 再用 HTTP 协议通信，就可以管理状态了。
 2. 告知服务器意图的 HTTP 方法
 3. GET ：获取资源;POST：传输实体主体;PUT：传输文件;HEAD：获得报文首部;DELETE：删除文件;CONNECT：要求用隧道协议连接代理
-
-### HTTP持久连接
-
-1. HTTP 协议的初始版本中，每进行一次 HTTP 通信就要断开一次 TCP连接。
-2. 持久连接的好处在于减少了 TCP 连接的重复建立和断开所造成的额外开销，减轻了服务器端的负载。另外，减少开销的那部分时间，使HTTP 请求和响应能够更早地结束，这样 Web 页面的显示速度也就相应提高了。
 
 ### HTTP管线化
 
@@ -115,26 +123,93 @@ URI 和 URL：URI（统一资源标识符）,URL（Uniform Resource Locator，�
 
 ### HTTP 报文
 
-用于 HTTP 协议交互的信息被称为 HTTP 报文。请求端（客户端）的HTTP 报文叫做请求报文，响应端（服务器端）的叫做响应报文。
+1. HTTP 请求报文
 
-1. HTTP 报文大致可分为报文首部和报文主体两块。
-2. 请求行：包含用于请求的方法，请求 URI 和 HTTP 版本
-3. 状态行：包含表明响应结果的状态码，原因短语和 HTTP 版本
-4. 首部字段：包含表示请求和响应的各种条件和属性的各类首部。
-   一般有 4 种首部，分别是：通用首部、请求首部、响应首部和实体首部。
-5. 其他：可能包含 HTTP 的 RFC 里未定义的首部（Cookie 等）
-6. 编码提升传输速率：举例：multipart/form-data在 Web 表单文件上传时使用。
+```
+GET /index.html HTTP/1.1
+Host: www.example.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+```
 
-#### 返回结果的 HTTP 状态码
+**解析:**
 
-状态码的职责是当客户端向服务器端发送请求时，描述返回的请求结果。借助状态码，用户可以知道服务器端是正常处理了请求，还是出
-现了错误。
+1. **请求行：**
+
+   - ```
+     GET /index.html HTTP/1.1
+     ```
+
+     - `GET`：请求方法
+     - `/index.html`：请求的 URI
+     - `HTTP/1.1`：HTTP 版本
+
+2. **首部字段：**
+
+   - `Host: www.example.com`：请求的主机
+   - `User-Agent: Mozilla/5.0 ...`：客户端信息
+   - `Accept: text/html,...`：客户端接受的内容类型
+   - `Accept-Language: en-US,en;q=0.5`：客户端接受的语言
+   - `Accept-Encoding: gzip, deflate, br`：客户端接受的编码方式
+   - `Connection: keep-alive`：保持连接
+   - `Upgrade-Insecure-Requests: 1`：请求升级到 HTTPS
+
+3. HTTP 响应报文示例
+
+```python
+HTTP/1.1 200 OK
+Date: Sat, 12 Jun 2021 10:00:00 GMT
+Server: Apache/2.4.41 (Ubuntu)
+Last-Modified: Mon, 10 May 2021 14:30:00 GMT
+Content-Length: 305
+Content-Type: text/html; charset=UTF-8
+Connection: Closed
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Example Page</title>
+</head>
+<body>
+    <h1>Welcome to the Example Page!</h1>
+    <p>This is a sample HTML page.</p>
+</body>
+</html>
+```
+
+**解析:**
+
+1. **状态行：**
+
+   - ```
+     HTTP/1.1 200 OK
+     ```
+
+     - `HTTP/1.1`：HTTP 版本
+     - `200`：状态码，表示请求成功
+     - `OK`：原因短语
+
+2. **首部字段：**
+
+   - `Date: Sat, 12 Jun 2021 10:00:00 GMT`：响应时间
+   - `Server: Apache/2.4.41 (Ubuntu)`：服务器信息
+   - `Last-Modified: Mon, 10 May 2021 14:30:00 GMT`：资源最后修改时间
+   - `Content-Length: 305`：响应主体长度
+   - `Content-Type: text/html; charset=UTF-8`：响应内容类型
+   - `Connection: Closed`：关闭连接
+
+3. **报文主体：**
+
+   - 包含实际传输的数据内容，这里是一个简单的 HTML 页面。
 
 ### 用单台虚拟主机实现多个域名
 
 1. HTTP/1.1 规范允许一台 HTTP 服务器搭建多个 Web 站点。这是因为利用了虚拟主机（Virtual Host，又称虚拟服务器）的功
-   能。即使物理层面只有一台服务器，但只要使用虚拟主机的功能，则可以
-   假想已具有多台服务器。
+   能。即使物理层面只有一台服务器，但只要使用虚拟主机的功能，则可以假想已具有多台服务器。
 2. 在相同的 IP 地址下，由于虚拟主机可以寄存多个不同主机名和域名的 Web 网站，因此在发送 HTTP 请求时，必须在 Host 首部内完整指定主机名或域名的 URI
 
 ### 通信数据转发程序 ：代理、网关、隧道
@@ -177,20 +252,6 @@ URI 和 URL：URI（统一资源标识符）,URL（Uniform Resource Locator，�
    客户端的缓存
 
    缓存不仅可以存在于缓存服务器内，还可以存在客户端浏览器中。以Internet Explorer 程序为例，把客户端缓存称为临时网络文件。
-
-### HTTP 首部字段
-
-1. HTTP 首部字段是由首部字段名和字段值构成的，中间用冒号“:” 分隔。
-
-   例如：Content-Type: text/ht
-
-2. 分为：通用首部字段，请求首部字段，响应首部字段，实体首部字段。
-
-### 缺点
-
-1. 通信使用明文（不加密），内容可能会被窃听 
-2. 不验证通信方的身份，因此有可能遭遇伪装
-3. 无法证明报文的完整性，所以有可能已遭篡改,中间人攻击
 
 ## https
 
@@ -263,4 +324,14 @@ SSL的慢分两种。一种是指通信慢。另一种是指由于大量消耗CP
    1. 连接超时：这是在客户端等待建立连接的过程中发生的。如果在规定的时间内，服务器没有返回响应，客户端就会认为连接超时。这个超时时间可以在客户端的HTTP设置中进行配置。
    2. 请求超时：这是在客户端等待服务器响应的过程中发生的。如果在规定的时间内，服务器没有返回响应，客户端就会认为请求超时。这个超时时间也可以在客户端的HTTP设置中进行配置。
 
-   在HTTP/1.1中，引入了持久连接（Persistent Connections）的概念，这意味着在一个TCP连接上可以发送多个HTTP请求和响应。为了管理这些持久连接，HTTP协议提供了一些头部字段，如`Connection: keep-alive`，它告诉服务器在完成当前的HTTP请求/响应对后，还可以在这个TCP连接上发送更多的请求。当持久连接上的所有请求都完成后，如果客户端或服务器没有发送新的请求，那么连接就会被关闭。这个关闭连接的过程就可能会发生超时。
+   
+
+## 版本迭代
+
+| 版本         | 发布年份 | 主要特点                                                     |
+| ------------ | -------- | ------------------------------------------------------------ |
+| **HTTP/0.9** | 1991     | - 只支持简单的GET请求<br>- 只传输纯文本内容<br>- 无HTTP头部和状态码<br>- 一次性连接 |
+| **HTTP/1.0** | 1996     | - 支持GET、POST、HEAD请求方法<br>- 引入HTTP头部<br>- 支持状态码<br>- 一次性连接 |
+| **HTTP/1.1** | 1997     | - 持久连接，连接复用 Connection: keep-alive<br>- 支持流水线<br>- 增强的缓存控制<br>- 分块传输编码<br>- 带宽优化和延迟处理 |
+| **HTTP/2**   | 2015     | - 二进制分帧层<br>- 多路复用<br>- 头部压缩<br>- 服务器推送<br>- 改进的流量控制和错误处理 |
+| **HTTP/3**   | 2022     | - 基于QUIC协议，运行在UDP之上<br>- 更低的延迟和更好的连接恢复能力<br>- 继承HTTP/2的特性<br>- 默认TLS 1.3加密 |
