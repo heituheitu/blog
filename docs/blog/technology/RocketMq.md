@@ -31,7 +31,7 @@
 - 单向消息发送（异步无回调）
 
   发送消息后立即返回，不关心是否发送成功。
-  
+
 - 延时消息
 
   通过指定延时时间控制消息生产后，不要立即投递，在延时时间间隔后才对消费者可见。
@@ -161,15 +161,15 @@ try {
 
  集群消费：对于任意一条被订阅的消息，同一消费者组下的节点只有一个节点可以对其消费；一个消费者组中的全部节点分摊所有消息。
 
-![img](https://oscimg.oschina.net/oscnet/fc07a476b08d482eea332170c6f784fa2b0.png?ynotemdtimestamp=1700209609547)
+![img](http://www.qiniuyun.zhangzhendong.com/blog/image/fc07a476b08d482eea332170c6f784fa2b0.png)
 
  广播消费：对于任意一条消息，同一消费者组的所有节点都会对其消费；一个消费者组中的全部节点都能接收到全量的消息。会多次消费。
 
-![c464adc25745522c9cd7213602d2d206c67.png](https://oscimg.oschina.net/oscnet/c464adc25745522c9cd7213602d2d206c67.png?ynotemdtimestamp=1700209609547)
+![c464adc25745522c9cd7213602d2d206c67.png](http://www.qiniuyun.zhangzhendong.com/blog/image/c464adc25745522c9cd7213602d2d206c67.png)
 
  混合模式消费：对于任意一条被订阅的消息，同一消费者组之间只会有一个节点对其进行消费，不同消费者组都会进行全量消息的消费。
 
-![img](https://oscimg.oschina.net/oscnet/53fe61e030ae77d21e9108a7cd6e00af80b.png?ynotemdtimestamp=1700209609547)
+![img](http://www.qiniuyun.zhangzhendong.com/blog/image/53fe61e030ae77d21e9108a7cd6e00af80b.png)
 
 消费点位offset：集群模式下broker 存储 offset 的值，采用 RemoteBrokerOffsetStore；广播模式下采用 LocalFileOffsetStore，消费端存储offset的值。
 
