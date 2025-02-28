@@ -41,7 +41,6 @@ export default defineConfig({
 
         // 设置logo
         logo: '/logo.png',
-        //https://shortvideo.hexun.com/icon/WechatIMG280.jpg
         nav: [
             {text: '首页', link: '/'},
             {text: '技术笔记', link: '/blog/technology/网关GateWay'},
